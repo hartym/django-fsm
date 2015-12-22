@@ -308,13 +308,14 @@ class FSMFieldMixin(object):
 
         next_state = meta.next_state(current_state)
 
-        signal_kwargs = {
+        signal_kwargs = dict(kwargs)
+        signal_kwargs.update({
             'sender': instance.__class__,
             'instance': instance,
             'name': method_name,
             'source': current_state,
             'target': next_state
-        }
+        })
 
         pre_transition.send(**signal_kwargs)
 
